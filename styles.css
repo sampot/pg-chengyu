@@ -1,0 +1,411 @@
+:root {
+  color-scheme: light dark;
+  --bg: #f2efe8;
+  --panel: #fffcf6;
+  --text: #1a1814;
+  --muted: #6b6458;
+  --line: #d9d0c0;
+  --accent: #b42318;
+  --on-accent: #fff8f5;
+  --ink: #1c3d32;
+  --seal: #c45c26;
+  --ok: #1f6b45;
+  --warn: #b45309;
+  --bad: #b42318;
+  --tap: 48px;
+  --radius: 0.85rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121410;
+    --panel: #1a1d18;
+    --text: #ece7dc;
+    --muted: #a39a88;
+    --line: #2e332c;
+    --accent: #e85d4c;
+    --on-accent: #1a0c0a;
+    --ink: #8fbfa8;
+    --seal: #e08a4f;
+    --ok: #4ecf7a;
+    --warn: #fbbf24;
+    --bad: #f87171;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.ambiance {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(720px 420px at 85% -8%, color-mix(in oklab, var(--accent) 16%, transparent), transparent 55%),
+    radial-gradient(560px 360px at 0% 100%, color-mix(in oklab, var(--ink) 14%, transparent), transparent 50%),
+    var(--bg);
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font-family:
+    "PingFang TC",
+    "Noto Sans TC",
+    "Segoe UI",
+    sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+main {
+  width: min(100%, 28rem);
+  margin: 0 auto;
+  padding: 0.85rem 0.75rem max(1.1rem, env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.hero {
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.32em;
+  color: var(--seal);
+  font-weight: 700;
+}
+
+.hero h1 {
+  margin: 0.15rem 0 0;
+  font-family:
+    "Songti TC",
+    "Noto Serif TC",
+    "Iowan Old Style",
+    serif;
+  font-size: clamp(1.85rem, 6vw, 2.35rem);
+  letter-spacing: 0.28em;
+  color: var(--ink);
+}
+
+.tagline {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.meter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.meter-item {
+  flex: 1 1 4.2rem;
+  min-height: var(--tap);
+  padding: 0.35rem 0.45rem;
+  border-radius: 0.7rem;
+  border: 1px solid var(--line);
+  background: color-mix(in oklab, var(--panel) 92%, transparent);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.meter-item .label {
+  font-size: 0.68rem;
+  color: var(--muted);
+}
+
+.meter-item strong {
+  font-size: 1.05rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.chip,
+button {
+  min-height: var(--tap);
+  border-radius: 0.75rem;
+  border: 1px solid transparent;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0.45rem 0.85rem;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.chip {
+  flex: 1 1 auto;
+  background: color-mix(in oklab, var(--text) 5%, var(--panel));
+  border-color: var(--line);
+  color: var(--text);
+}
+
+.chip.is-active {
+  background: color-mix(in oklab, var(--accent) 16%, var(--panel));
+  border-color: color-mix(in oklab, var(--accent) 45%, var(--line));
+  color: var(--accent);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.controls button {
+  flex: 1 1 auto;
+}
+
+button:not(.chip):not(.secondary):not(.choice) {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+button.secondary {
+  background: color-mix(in oklab, var(--text) 5%, var(--panel));
+  border-color: var(--line);
+  color: var(--text);
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.status {
+  margin: 0;
+  min-height: 1.3em;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.status[data-tone="ok"] {
+  color: var(--ok);
+}
+.status[data-tone="bad"] {
+  color: var(--bad);
+}
+.status[data-tone="warn"] {
+  color: var(--warn);
+}
+
+.board {
+  padding: 0.85rem 0.75rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(180deg, color-mix(in oklab, var(--panel) 96%, transparent), var(--panel));
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.need-label {
+  margin: 0;
+  text-align: center;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+}
+
+.need-char {
+  margin: 0;
+  text-align: center;
+  font-family:
+    "Songti TC",
+    "Noto Serif TC",
+    serif;
+  font-size: clamp(2.6rem, 12vw, 3.4rem);
+  line-height: 1;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+}
+
+.last-idiom {
+  margin: 0;
+  text-align: center;
+  font-family:
+    "Songti TC",
+    "Noto Serif TC",
+    serif;
+  font-size: 1.25rem;
+  letter-spacing: 0.2em;
+  color: var(--ink);
+}
+
+.timer-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--text) 8%, transparent);
+  overflow: hidden;
+}
+
+.timer-bar i {
+  display: block;
+  height: 100%;
+  width: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--seal), var(--accent));
+  transform-origin: left center;
+  transition: transform 0.1s linear;
+}
+
+.choices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.45rem;
+}
+
+.choice {
+  min-height: calc(var(--tap) + 4px);
+  background: color-mix(in oklab, var(--ink) 6%, var(--panel));
+  border: 1px solid var(--line);
+  color: var(--text);
+  font-family:
+    "Songti TC",
+    "Noto Serif TC",
+    serif;
+  font-size: 1.15rem;
+  letter-spacing: 0.18em;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.choice:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.choice.is-flash-ok {
+  border-color: var(--ok);
+  background: color-mix(in oklab, var(--ok) 18%, var(--panel));
+}
+
+.choice.is-flash-bad {
+  border-color: var(--bad);
+  background: color-mix(in oklab, var(--bad) 16%, var(--panel));
+}
+
+.type-form {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.type-form input {
+  flex: 1 1 auto;
+  min-height: var(--tap);
+  border-radius: 0.75rem;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--text);
+  font: inherit;
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+  padding: 0.45rem 0.7rem;
+}
+
+.type-form button {
+  flex: 0 0 auto;
+}
+
+.history-panel {
+  padding: 0.65rem 0.7rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: color-mix(in oklab, var(--panel) 90%, transparent);
+}
+
+.history-panel h2 {
+  margin: 0 0 0.4rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.history {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  max-height: 7.5rem;
+  overflow: auto;
+}
+
+.history li {
+  padding: 0.3rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-family:
+    "Songti TC",
+    "Noto Serif TC",
+    serif;
+  font-size: 0.92rem;
+  letter-spacing: 0.12em;
+  background: color-mix(in oklab, var(--text) 3%, transparent);
+}
+
+.history li:last-child {
+  border-color: color-mix(in oklab, var(--accent) 50%, var(--line));
+  color: var(--accent);
+}
+
+.rules {
+  padding: 0.5rem 0.7rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--line);
+  background: color-mix(in oklab, var(--panel) 90%, transparent);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.rules summary {
+  min-height: var(--tap);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.rules ul {
+  margin: 0.2rem 0 0.5rem;
+  padding-left: 1.15rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+@media (min-width: 640px) {
+  main {
+    width: min(100%, 34rem);
+    padding-top: 1.2rem;
+  }
+  .choices {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.55rem;
+  }
+}

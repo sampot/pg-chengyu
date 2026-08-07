@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="description"
+      content="成語接龍：末字起頭、挑戰與人機對戰、倒數計時。純前端 Playgrounds SAM，適配手機與桌面。"
+    />
+    <title>成語接龍</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="ambiance" aria-hidden="true"></div>
+    <main>
+      <header class="hero">
+        <p class="eyebrow">益智</p>
+        <h1>成語接龍</h1>
+        <p class="tagline">末字起頭 · 挑戰計分 · 人機對戰</p>
+      </header>
+
+      <section class="meter" aria-label="對局狀態">
+        <div class="meter-item">
+          <span class="label">分數</span>
+          <strong id="score">0</strong>
+        </div>
+        <div class="meter-item">
+          <span class="label">最佳</span>
+          <strong id="best">0</strong>
+        </div>
+        <div class="meter-item">
+          <span class="label">連擊</span>
+          <strong id="streak">0</strong>
+        </div>
+        <div class="meter-item">
+          <span class="label">生命</span>
+          <strong id="lives">3</strong>
+        </div>
+        <div class="meter-item">
+          <span class="label">倒數</span>
+          <strong id="timer">—</strong>
+        </div>
+      </section>
+
+      <div class="chip-row" role="group" aria-label="模式">
+        <button type="button" class="chip is-active" data-mode="challenge">挑戰</button>
+        <button type="button" class="chip" data-mode="duel">對戰</button>
+      </div>
+      <div class="chip-row" role="group" aria-label="難度">
+        <button type="button" class="chip" data-diff="easy">簡單</button>
+        <button type="button" class="chip is-active" data-diff="normal">普通</button>
+        <button type="button" class="chip" data-diff="hard">困難</button>
+      </div>
+
+      <div class="controls">
+        <button type="button" id="btn-start">開局</button>
+        <button type="button" id="btn-pass" class="secondary" disabled>跳過</button>
+        <button type="button" id="btn-mute" class="secondary" aria-pressed="true">音效</button>
+      </div>
+
+      <p id="status" class="status" role="status">選模式後開局</p>
+
+      <section class="board" aria-label="接龍盤面">
+        <p class="need-label">要接的字</p>
+        <p id="need-char" class="need-char" aria-live="polite">—</p>
+        <p id="last-idiom" class="last-idiom">尚未開局</p>
+        <div id="timer-bar" class="timer-bar" aria-hidden="true"><i id="timer-fill"></i></div>
+        <div id="choices" class="choices" role="group" aria-label="候選成語"></div>
+        <form id="type-form" class="type-form" autocomplete="off">
+          <label class="sr-only" for="type-input">自行輸入成語</label>
+          <input
+            id="type-input"
+            type="text"
+            inputmode="text"
+            maxlength="8"
+            placeholder="或自行輸入四字成語"
+            disabled
+          />
+          <button type="submit" id="btn-submit" class="secondary" disabled>送出</button>
+        </form>
+      </section>
+
+      <section class="history-panel" aria-label="接龍紀錄">
+        <h2>接龍紀錄</h2>
+        <ol id="history" class="history"></ol>
+      </section>
+
+      <details class="rules">
+        <summary>怎麼玩</summary>
+        <ul>
+          <li>下一語必須以上一語的<strong>最後一字</strong>開頭，且為詞庫內四字成語、不可重複。</li>
+          <li><strong>挑戰</strong>：限時作答，答錯或逾時扣命；可點候選或自行輸入。</li>
+          <li><strong>對戰</strong>：你與簡易 AI 輪流接龍；接不上或跳過即敗。</li>
+        </ul>
+      </details>
+    </main>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
