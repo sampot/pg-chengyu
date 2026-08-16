@@ -100,7 +100,7 @@ function syncHud() {
   scoreEl.textContent = String(game.score);
   bestEl.textContent = String(Math.max(best, game.best, game.score));
   streakEl.textContent = String(game.streak);
-  livesEl.textContent = game.mode === "duel" ? "—" : String(Math.max(0, game.lives));
+  livesEl.textContent = game.mode === "duel" ? "淘汰制" : String(Math.max(0, game.lives));
   if (game.status === "playing" && game.turn === "player") {
     timerEl.textContent = String(Math.ceil(game.timeLeft));
     const pct = Math.max(0, Math.min(1, game.timeLeft / game.turnSec));

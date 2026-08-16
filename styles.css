@@ -197,6 +197,12 @@ button:disabled {
 }
 .status[data-tone="bad"] {
   color: var(--bad);
+  padding: 0.65rem;
+  border: 1px solid color-mix(in oklab, var(--bad) 55%, var(--line));
+  border-radius: 0.75rem;
+  background: color-mix(in oklab, var(--bad) 12%, var(--panel));
+  font-size: 1rem;
+  font-weight: 800;
 }
 .status[data-tone="warn"] {
   color: var(--warn);
