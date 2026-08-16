@@ -1,5 +1,7 @@
 /**
- * 成語接龍 — solo challenge + vs AI.
+ * 成語接龍 — solo challenge + local-first duel.
+ * Future Invite transport contract: `chengyu.v1`.
+ * Messages will describe room state/turn moves/timeouts; networking is intentionally not implemented.
  */
 
 import {
@@ -100,7 +102,14 @@ export class ChengyuGame {
     this.timeLeft -= dt;
     if (this.timeLeft <= 0) {
       this.timeLeft = 0;
-      events.push(...this.fail("時間到"));
+      if (this.mode === "duel") {
+        this.status = "lost";
+        this.turn = null;
+        this.message = "時間到，你被淘汰了";
+        events.push("lose");
+      } else {
+        events.push(...this.fail("時間到"));
+      }
     }
     return { events };
   }
