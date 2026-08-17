@@ -54,6 +54,8 @@ function saveBest() {
   } catch {
     /* */
   }
+  // KV 為權威；LS 僅快取
+  void fetch(`/api/kv/${BEST_KEY}`, { method: "PUT", body: String(best) }).catch(() => {});
 }
 
 /**
@@ -283,6 +285,17 @@ function frame(ts) {
 }
 
 bestEl.textContent = String(best);
+// KV 為權威；本地快取過舊時以遠端為準
+void fetch(`/api/kv/${BEST_KEY}`)
+  .then((r) => (r.ok ? r.text() : null))
+  .then((raw) => {
+    const n = Math.max(0, Number(raw) || 0);
+    if (n > best) {
+      best = n;
+      bestEl.textContent = String(Math.max(best, game.best, game.score));
+    }
+  })
+  .catch(() => {});
 syncHud();
 setStatus(game.message);
 requestAnimationFrame(frame);
