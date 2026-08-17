@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "rev": "fbbf807",
+  "files": [
+    "app.js",
+    "audio.js",
+    "functions.js",
+    "game.js",
+    "idioms.js",
+    "index.html",
+    "styles.css"
+  ]
+}
